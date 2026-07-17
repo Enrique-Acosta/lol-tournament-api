@@ -1,7 +1,7 @@
-# League of Legends Tournament API
+# Lol Tournament API
 Temática
 
-API REST para gestionar un torneo de League of Legends, donde los equipos pueden registrarse para participar.
+API REST desarrollada con Node.js y Express como base arquitectónica para una plataforma de gestión de torneos de League of Legends. En esta entrega se implementan la estructura del proyecto, la configuración del servidor y los endpoints iniciales.
 
 Tecnologías
 Node.js
@@ -20,9 +20,8 @@ Crear un archivo .env tomando como referencia .env.example.
 Variables necesarias:
 
 PORT
-NODE_ENV
 MONGO_URL
-JWT_SECRET
+
 Cómo ejecutar
 
 Modo desarrollo:
@@ -39,13 +38,22 @@ src/
 ├── app.js
 ├── server.js
 ├── config/
-├── routes/
+│   ├── database.js    # Configuracion de MongoDB 
+│   └── env.js         # Variables de entorno
 ├── controllers/
-├── services/
-├── repositories/
+│   ├── eventsController.js     # Devuelve un lista vacia de eventos
+│   └── sessionController.js    # Register y login responden con 503
 ├── dao/
-├── models/
 ├── middlewares/
+├── models/
+│   ├── eventModel.js   # Modelo de eventos
+│   └── userModel.js    # Modelo de usuarios
+├── repositories/
+├── routes/
+│   ├── eventsRouter.js    # Rutas de eventos
+│   ├── healthRouter.js    # Verificación del servidor
+│   └── sessionRouter.js   # Rutas de autenticación
+├── services/
 └── utils/
 
 Rutas disponibles
@@ -53,4 +61,4 @@ Rutas disponibles
 Método	Ruta	Descripción
 GET	/api/health	Verifica que el servidor está activo.
 GET	/api/events	Devuelve la lista de eventos (vacía en esta etapa).
-GET	/api/sessions	Estructura inicial para sesiones.
+GET	/api/sessions	Estructura inicial para sesiones (Responde con status 503).

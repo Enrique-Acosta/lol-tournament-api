@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { getAll } from "../controllers/eventsController.js";
+
 const router = Router()
 
 router.get('/', getAll)
