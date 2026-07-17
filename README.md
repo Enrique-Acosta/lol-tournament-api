@@ -9,16 +9,17 @@ Express
 MongoDB
 Mongoose
 Dotenv
+
 Instalación
 Clonar el repositorio.
 Instalar las dependencias:
 npm install
+
 Configuración de variables de entorno
 
 Crear un archivo .env tomando como referencia .env.example.
 
 Variables necesarias:
-
 PORT
 MONGO_URL
 
@@ -55,7 +56,7 @@ src/
 │   └── sessionRouter.js   # Rutas de autenticación
 ├── services/
 └── utils/
-
+── .env.example              # PORT, NODE_ENV, MONGO_URL, JWT_SECRET
 Rutas disponibles
 
 Método	Ruta	Descripción
