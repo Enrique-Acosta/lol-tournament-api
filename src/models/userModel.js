@@ -27,7 +27,7 @@ const userSchema = new Schema(
             required: true,
             minlength: [8, "La contraseña debe tener al menos 8 caracteres"]
         },
-        rol: {
+        role: {
             type: String,
             enum: ["admin", "organizer", "user"],
             default: "user"

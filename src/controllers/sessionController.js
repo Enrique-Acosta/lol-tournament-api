@@ -1,5 +1,7 @@
 import { userModel } from "../models/userModel.js";
-import { createHash } from "../utils/bcrypt.js";
+import { createHash, validatePassword } from "../utils/bcrypt.js";
+import { generateToken } from "../utils/jwt.js";
+
 export async function register (req, res) {
     try {
         const {first_name, last_name, email, password} = req.body
@@ -52,8 +54,53 @@ export async function register (req, res) {
     
 }
 
-export function login (req, res) {
-    res.status(503).json({
-        message: 'login no disponible por el momento'
+export async function login (req, res) {
+  try {
+     const { user } = req
+     const { password } = req.body
+     const checkPassword = await validatePassword(password, user.password)
+
+    if (!checkPassword){
+        return res.status(401).json({
+            status: 'error',
+            message: 'Credenciales invalidas'
+        })
+    }else{
+        const sessionData = {
+            id: user.id,
+            email: user.email,
+            role: user.role
+        }
+        const token = generateToken(sessionData)
+        res.cookie('jwt',token,{ signed:true , httpOnly:true , maxAge: 60000}).status(200).json({status:'success', message:'Login exitoso'})
+    }
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      message: 'Error interno del servidor'
     })
+    
+  }
+}
+
+export function current (req, res){
+   try {
+        const { user }= req
+        const payload= {
+            id: user.id,
+            email: user.email,
+            role: user.role
+        }
+        res.status(200).json({status:'success', payload: payload})
+   } catch (error) {
+        res.status(500).json({status:'error', message:'Error interno del servidor'})
+   }
+}
+
+export function logout (req, res) {
+    res.clearCookie('jwt')
+    res.status(200).json({
+    status: 'success',
+    message: 'Logout correcto'
+  })
 }
